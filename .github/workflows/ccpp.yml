@@ -10,7 +10,7 @@ jobs:
       with:
         fetch-depth: 1
     - name: apt
-      run: sudo apt update && sudo apt install -y cpmtools bazel-bootstrap flex bison libreadline-dev libz80ex-dev
+      run: sudo apt update && sudo apt install -y cpmtools bazel-bootstrap flex bison libreadline-dev libz80ex-dev lua5.4
     - name: build-ack
       run: |
         git clone --depth=1 https://github.com/davidgiven/ack.git
@@ -18,21 +18,3 @@ jobs:
         make -C ack PREFIX=$HOME install
     - name: make
       run: PATH=$PATH:$HOME/bin make
-
-  build-macos:
-    runs-on: macos-latest
-    steps:
-    - uses: actions/checkout@v1
-      with:
-        fetch-depth: 1
-    - name: brew
-      run: brew install pkg-config bazelisk cpmtools truncate libz80ex
-    - name: build-ack
-      run: |
-        git clone --depth=1 https://github.com/davidgiven/ack.git
-        make -C ack PREFIX=$HOME +ack-cpm
-        make -C ack PREFIX=$HOME install
-    - name: make
-      run: PATH=$PATH:$HOME/bin make
-
-
